@@ -3,5 +3,3 @@ supabase
 requests
 pandas
 python-dotenv
-time
-datetime
