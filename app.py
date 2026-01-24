@@ -2,7 +2,7 @@ from streamlit_init import *
 init_states()
 st.set_page_config(layout="wide")
 import time
-
+import os
 import pandas as pd
 from main import *
 from ikas_entegrasyon import IKAS_SIPARIS_ENTEGRASYON
@@ -43,8 +43,18 @@ elif sidebarButton == "Stok Yönetimi":
     st.write(HAM_MADDE_STOKLARI())
     st.write(anlik_stoklar_init())
     st.write("---")
-    for i in anlik_stoklar_init():
-        st.write(st.session_state[i])
+
+    if st.button("💾 Veritabanına Kaydet"):
+
+        for stok_key in anlik_stoklar_init():
+            if stok_key in st.session_state:
+                supabase_nesnesi.table("stoklar").upsert({
+                    "stok_ismi": stok_key,
+                    "stok_degeri": st.session_state[stok_key]
+                }).execute()
+
+        st.success("Tüm stoklar veritabanına kaydedildi ✅")
+
 
 elif sidebarButton == "Teslim Edilen Siparişler (ikas)":
     st.dataframe(st.session_state["deliveredRows"])
@@ -67,12 +77,14 @@ elif sidebarButton == "Dosya Gönder":
     if yuklenen_dosya != None:
         owner_id = "admin"
         #ext = yuklenen_dosyalar.name.split(".")[-1]
-        unique_name = f"{datetime.now().strftime("%d%m%y_%H%M%S")}.pdf"
+        uzanti = os.path.splitext(yuklenen_dosya.name)[1].lower()
+        unique_name = f"{datetime.now().strftime("%d%m%y_%H%M%S")}{uzanti}"
         storage_path = f"{owner_id}/{unique_name}"
         st.write("storage_path", storage_path)    
 
     
         file_bytes = yuklenen_dosya.read()
+        
         res = supabase_nesnesi.storage.from_("dosyalar").upload(
             storage_path,
             file_bytes,
