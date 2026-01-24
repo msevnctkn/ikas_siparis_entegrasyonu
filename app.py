@@ -8,6 +8,7 @@ from main import *
 from ikas_entegrasyon import IKAS_SIPARIS_ENTEGRASYON
 from tikli_dataframe import SIPARIS_DATAFRAME_DUZENLE
 from veritabani import *
+from veritabani import databaseden_butun_verileri_cek
 from malzeme_istekleri import *
 
 
