@@ -26,8 +26,7 @@ class SIPARIS_DATAFRAME_DUZENLE():
     def siparis_tik_tablosu(self, df, supabase):
 
         self.tik_kolonlari = [
-            "mdf_kesildi", "parcalar_kesildi", "pleksi_kesildi", "carklar_kesildi",
-            "altlik_kesildi", "arkalik_kesildi", "boyaya_teslim",
+            "mdf_kesildi", "pleksi_kesildi", "boyaya_teslim",
             "cerceve_boyandi", "montaja_teslim", "kargoya_hazir", "tamamlananlara_gonder"
         ]
         liste = []
@@ -57,7 +56,7 @@ class SIPARIS_DATAFRAME_DUZENLE():
             for idx, kolon in enumerate(self.tik_kolonlari):
 
                 key_name = f"{kolon}_{siparisno}"  # benzersiz anahtar
-                liste.append([key_name, siparisno, kolon])
+                #liste.append([key_name, siparisno, kolon])
 
 
                 if key_name not in st.session_state:
@@ -78,7 +77,7 @@ class SIPARIS_DATAFRAME_DUZENLE():
                 except Exception as e:
                     pass
             st.write("---")
-        return liste
+        #return liste
 
 
     

@@ -1,5 +1,5 @@
 
-from datetime import datetime
+from main import *
 import requests 
 import pandas as pd
 from sorgular import *
@@ -93,6 +93,9 @@ class IKAS_SIPARIS_ENTEGRASYON():
     def siparis_dataframe_hazirla(self, data):
       
       self.siparis_bilgileri = data["data"]["listOrder"]["data"]
+      #oluşturuldu statüsünde bekleyen sipariş sayısı -> lazım olan cam sayısını bulmak için
+
+
       for content in self.siparis_bilgileri:
         try:
   
@@ -104,12 +107,42 @@ class IKAS_SIPARIS_ENTEGRASYON():
           except TypeError as e:
             musteri_adi_soyadi = " "
           urun_adi = content["orderLineItems"][0]["variant"]["name"]
+          
+
+
+
+
+
           siparis_durumu = content["orderLineItems"][0]["status"]
           imalat_bitis_suresi = self.resmi_tatil.is_gunu_ekle(tarih_str=siparis_tarihi, is_gunu=12)
           siparis_durumu = self.siparis_durumu_tr()[siparis_durumu]
 
           if siparis_numarasi not in st.session_state.get("eklenen_siparisler", 0):
             st.session_state["eklenen_siparisler"].add(siparis_numarasi)
+
+            #Satüsü 'oluşturuldu' olarak bekleyen sipariş sayısı:
+            if siparis_durumu == "Oluşturuldu":
+              
+              if "65 CM" in urun_adi:
+                st.session_state["olusturuldu_cam_sayisi_65"] += 1
+                st.session_state["olusturuldu_ham_cerceve_sayisi_65"] += 1
+              
+          
+              elif "60 CM" in urun_adi:
+                st.session_state["olusturuldu_cam_sayisi_60"] += 1
+                st.session_state["olusturuldu_ham_cerceve_sayisi_60"] += 1
+         
+
+              elif "40 CM" in urun_adi:
+                st.session_state["olusturuldu_cam_sayisi_40"] += 1
+                st.session_state["olusturuldu_ham_cerceve_sayisi_40"] += 1
+
+              
+              else:
+                pass
+                  #st.session_state["olusturuldu_cam_sayisi"] += 1
+
+
 
             if siparis_durumu != "Teslim Edildi" and siparis_durumu != "İptal Edildi" and siparis_durumu != "İade Edildi":
               
@@ -140,7 +173,9 @@ class IKAS_SIPARIS_ENTEGRASYON():
 
         except Exception as e:
             st.write("Hata ile karşılaşıldı: ", e)
-
+ 
+        
+      #st.write("oluşturuldu olarak bekleyen cam sayısı", st.session_state["olusturuldu_cam_sayisi"])
       return st.session_state["rows"]
       
 

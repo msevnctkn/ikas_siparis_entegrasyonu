@@ -13,16 +13,6 @@ def get_connection():
 
 
 
-
-def kaydet(supabase, siparis_numarasi, checkbox_unique_isim):
-    
-    supabase.table("siparis_takip").upsert({"siparis_no":siparis_numarasi, 
-                                                "mdf_kesildi":checkbox_unique_isim}).execute()
-
-
-
-
-
 def checkbox_kontrol(supabase, siparis_no, kolon_adi, deger):
     supabase.table("siparis_takip") \
         .update({kolon_adi: deger}) \
@@ -54,3 +44,18 @@ def tum_checkboxlari_cek(supabase):
         sonuc[row["siparis_no"]] = row  # siparis_no → tüm kolonlar
     
     return sonuc
+
+
+
+def databaseden_butun_verileri_cek(supabase, table_name:str ):
+    data = supabase.table(table_name).select("*").execute()
+    return data.data
+
+
+def database_tekli_veri_yaz(supabase, table_name:str, kolon_adi, deger, ):
+    data = supabase.table(table_name).upsert({kolon_adi:deger})
+    return data
+
+
+
+
