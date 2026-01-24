@@ -49,7 +49,7 @@ def tum_checkboxlari_cek(supabase):
 
 def databaseden_butun_verileri_cek(supabase, table_name:str ):
     data = supabase.table(table_name).select("*").execute()
-    return data.data
+    return data
 
 
 def database_tekli_veri_yaz(supabase, table_name:str, kolon_adi, deger, ):

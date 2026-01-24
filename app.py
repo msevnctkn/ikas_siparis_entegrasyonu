@@ -93,7 +93,7 @@ elif sidebarButton == "Dosya Gönder":
     if not geri_donen_datalar:
         st.warning("Yüklenen Dosya Yok")
     else:
-        for data in geri_donen_datalar:
+        for data in geri_donen_datalar.data:
             id = data["id"]
             file_name = data["file_name"]
             storage_path = data["storage_path"]
