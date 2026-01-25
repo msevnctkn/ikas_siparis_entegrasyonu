@@ -23,7 +23,7 @@ class SIPARIS_DATAFRAME_DUZENLE():
 
 
 
-    def siparis_tik_tablosu(self, df, supabase):
+    def uretim_asamalari_tablosu(self, df, supabase):
 
         self.tik_kolonlari = [
             "mdf_kesildi", "pleksi_kesildi", "boyaya_teslim",

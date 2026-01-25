@@ -327,4 +327,3 @@ def HAM_MADDE_STOKLARI():
         st.write("Ham Çerçeve Sayısı 40", olusturuldu_ham_cerceve_sayisi_40)
 
 
-    

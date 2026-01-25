@@ -37,7 +37,13 @@ if sidebarButton == "ikas Bekleyen Siparişler":
 
     st.dataframe(siparis_listesi)
 
-    checkbox_bilgiler = SIPARIS_DATAFRAME_DUZENLE.siparis_tik_tablosu(pd.DataFrame(siparis_listesi), supabase=supabase_nesnesi)
+
+    siparis_listesi_copy = pd.DataFrame(siparis_listesi).copy()
+
+    st.write("Sipariş Listesi Kopyası")
+    st.write(siparis_listesi_copy)
+
+    checkbox_bilgiler = SIPARIS_DATAFRAME_DUZENLE.uretim_asamalari_tablosu(pd.DataFrame(siparis_listesi), supabase=supabase_nesnesi)
 
 elif sidebarButton == "Stok Yönetimi":
     st.write(HAM_MADDE_STOKLARI())
@@ -72,15 +78,24 @@ elif sidebarButton == "Veritabanı":
 
 
 elif sidebarButton == "Dosya Gönder":
-    st.write("Dosya gönder")
-    yuklenen_dosya = st.file_uploader("Yüklemek istediğiniz dosyayı buraya sürükleyin.")
+    with st.container(border=True):
+        st.write("Dosya gönder")
+        yuklenen_dosya = st.file_uploader("Yüklemek istediğiniz dosyayı buraya sürükleyin.")
+
+    
     if yuklenen_dosya != None:
+        with st.container(border=True):
+            st.info(f"""
+            **Dosya Adı:** {yuklenen_dosya.name}  
+            **Boyut:** {round(yuklenen_dosya.size / 1024, 2)} KB  
+            **Tür:** {yuklenen_dosya.type}
+            """)
         owner_id = "admin"
         #ext = yuklenen_dosyalar.name.split(".")[-1]
         uzanti = os.path.splitext(yuklenen_dosya.name)[1].lower()
         unique_name = f"{datetime.now().strftime("%d%m%y_%H%M%S")}{uzanti}"
         storage_path = f"{owner_id}/{unique_name}"
-        st.write("storage_path", storage_path)    
+     
 
     
         file_bytes = yuklenen_dosya.read()
@@ -92,15 +107,21 @@ elif sidebarButton == "Dosya Gönder":
         )
 
         if res:
-            st.success(f"Yüklendi: {yuklenen_dosya.name}")
-            supabase_nesnesi.table("yuklenen_dosyalar").insert({
+            
+            with st.container(border=True):
+      
+                st.success(f"Yüklendi: {yuklenen_dosya.name}")
+                supabase_nesnesi.table("yuklenen_dosyalar").insert({
                 "file_name": yuklenen_dosya.name,
                 "storage_path": storage_path,
                 "owner_id": owner_id
             }).execute()
+    st.write("---")
 
 
-    st.markdown("Verileri çek")
+
+    st.header("Yüklenen Dosyalar")
+    
     geri_donen_datalar = databaseden_butun_verileri_cek(supabase=supabase_nesnesi, table_name="yuklenen_dosyalar")
     
     if not geri_donen_datalar:

@@ -97,8 +97,10 @@ class IKAS_SIPARIS_ENTEGRASYON():
 
 
       for content in self.siparis_bilgileri:
+        #st.write(content)
+
         try:
-  
+          
           siparis_tarihi = (datetime.fromtimestamp(int(content["createdAt"])/1000)).date().strftime("%d.%m.%Y")
           siparis_numarasi = content["orderNumber"]
           notlar = content["note"]
@@ -106,40 +108,47 @@ class IKAS_SIPARIS_ENTEGRASYON():
             musteri_adi_soyadi = content["customer"]["fullName"] 
           except TypeError as e:
             musteri_adi_soyadi = " "
-          urun_adi = content["orderLineItems"][0]["variant"]["name"]
-          
+          #urun_adi = content["orderLineItems"][0]["variant"]["name"]
+          barcode_list = content["orderLineItems"][0]["variant"]["barcodeList"]
+          itemCount = content["itemCount"] # müşterinin toplam sipariş ettiği ürün sayısı
+
+          for i in content["orderLineItems"]:
+            barcodeList = i["variant"]["barcodeList"] # ürün barkodu
+            #st.session_state["urun_adi"].append(i["variant"]["name"]) #ürün ismi
 
 
-
-
+            #st.write("barcodeList", barcodeList)
+            
+          #st.write("---")
 
           siparis_durumu = content["orderLineItems"][0]["status"]
+   
           imalat_bitis_suresi = self.resmi_tatil.is_gunu_ekle(tarih_str=siparis_tarihi, is_gunu=12)
           siparis_durumu = self.siparis_durumu_tr()[siparis_durumu]
-
+          #st.write(st.session_state["urun_adi"])
           if siparis_numarasi not in st.session_state.get("eklenen_siparisler", 0):
             st.session_state["eklenen_siparisler"].add(siparis_numarasi)
 
             #Satüsü 'oluşturuldu' olarak bekleyen sipariş sayısı:
-            if siparis_durumu == "Oluşturuldu":
+            # if siparis_durumu == "Oluşturuldu":
               
-              if "65 CM" in urun_adi:
-                st.session_state["olusturuldu_cam_sayisi_65"] += 1
-                st.session_state["olusturuldu_ham_cerceve_sayisi_65"] += 1
+            #   if "65 CM" in urun_adi:
+            #     st.session_state["olusturuldu_cam_sayisi_65"] += 1
+            #     st.session_state["olusturuldu_ham_cerceve_sayisi_65"] += 1
               
           
-              elif "60 CM" in urun_adi:
-                st.session_state["olusturuldu_cam_sayisi_60"] += 1
-                st.session_state["olusturuldu_ham_cerceve_sayisi_60"] += 1
+            #   elif "60 CM" in urun_adi:
+            #     st.session_state["olusturuldu_cam_sayisi_60"] += 1
+            #     st.session_state["olusturuldu_ham_cerceve_sayisi_60"] += 1
          
 
-              elif "40 CM" in urun_adi:
-                st.session_state["olusturuldu_cam_sayisi_40"] += 1
-                st.session_state["olusturuldu_ham_cerceve_sayisi_40"] += 1
+            #   elif "40 CM" in urun_adi:
+            #     st.session_state["olusturuldu_cam_sayisi_40"] += 1
+            #     st.session_state["olusturuldu_ham_cerceve_sayisi_40"] += 1
 
               
-              else:
-                pass
+            #   else:
+            #     pass
                   #st.session_state["olusturuldu_cam_sayisi"] += 1
 
 
@@ -150,7 +159,7 @@ class IKAS_SIPARIS_ENTEGRASYON():
                 "siparis_tarihi":siparis_tarihi,
                 "siparis_numarasi": siparis_numarasi,
                 "musteri_adi_soyadi":musteri_adi_soyadi,
-                "urun_adi":urun_adi,
+                "urun_barkodu":barcode_list,
                 "notlar":notlar,
                 "imalat_bitis_suresi":imalat_bitis_suresi,
                 "siparis_durumu":siparis_durumu,     
@@ -161,7 +170,7 @@ class IKAS_SIPARIS_ENTEGRASYON():
                   "siparis_tarihi":siparis_tarihi,
                   "siparis_numarasi": siparis_numarasi,
                   "musteri_adi_soyadi":musteri_adi_soyadi,
-                  "urun_adi":urun_adi,
+                  "urun_barkodu":barcode_list,
                   "notlar":notlar,
                   "imalat_bitis_suresi":imalat_bitis_suresi,
                   "siparis_durumu":siparis_durumu,
