@@ -43,7 +43,7 @@ if sidebarButton == "ikas Bekleyen Siparişler":
     st.write("Sipariş Listesi Kopyası")
     st.write(siparis_listesi_copy)
 
-    checkbox_bilgiler = SIPARIS_DATAFRAME_DUZENLE.uretim_asamalari_tablosu(pd.DataFrame(siparis_listesi), supabase=supabase_nesnesi)
+    checkbox_bilgiler = SIPARIS_DATAFRAME_DUZENLE.uretim_asamalari_tablosu(df=pd.DataFrame(siparis_listesi), supabase=supabase_nesnesi)
 
 elif sidebarButton == "Stok Yönetimi":
     st.write(HAM_MADDE_STOKLARI())
