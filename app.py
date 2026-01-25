@@ -1,4 +1,5 @@
 from streamlit_init import *
+#st.beta_set_page_config(page_title='your_title', page_icon = st.image(), layout = 'wide', initial_sidebar_state = 'auto')
 init_states()
 st.set_page_config(layout="wide")
 import time
@@ -44,6 +45,10 @@ if sidebarButton == "ikas Bekleyen Siparişler":
     st.write(siparis_listesi_copy)
 
     checkbox_bilgiler = SIPARIS_DATAFRAME_DUZENLE.uretim_asamalari_tablosu(df=pd.DataFrame(siparis_listesi), supabase=supabase_nesnesi)
+
+
+
+
 
 elif sidebarButton == "Stok Yönetimi":
     st.write(HAM_MADDE_STOKLARI())

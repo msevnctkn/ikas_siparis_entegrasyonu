@@ -29,7 +29,8 @@ def init_states():
     for key in eklenen_siparisler:
         st.session_state.setdefault(key, set())
 
-    session_state_rows_list = ["rows", "urun_adi_list"]
+    session_state_rows_list = ["rows"]
+    
     session_state_teslim_edilen_siparisler_list = ["deliveredRows"]
     session_state_tik_list = ["tikList"]
 
@@ -44,7 +45,12 @@ def init_states():
     
     for key in session_state_tik_list:
         st.session_state.setdefault(key, [])
-        
+    
+
+    if "urun_bilgileri" not in st.session_state:
+        st.session_state["urun_bilgileri"] = []
+    
+
 
 
     # Oluşturuldu statüsünde bekleyen cam sayısı
