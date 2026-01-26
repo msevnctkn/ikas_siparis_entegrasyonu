@@ -109,25 +109,26 @@ class IKAS_SIPARIS_ENTEGRASYON():
           except TypeError as e:
             musteri_adi_soyadi = " "
           #urun_adi = content["orderLineItems"][0]["variant"]["name"]
-          #barcode_list = content["orderLineItems"][0]["variant"]["barcodeList"]
+          barcode_list = content["orderLineItems"][0]["variant"]["barcodeList"]
           itemCount = content["itemCount"] # müşterinin toplam sipariş ettiği ürün sayısı
           siparis_kanali = content["salesChannel"]["name"] #siparişin manuel mi yoksa siteden mi verildiğini söyler
           # omas = siteden kk ile ödendi
           # ADMIN = manuel
           
-          for i in content["orderLineItems"]:
-            barcodeList = i["variant"]["barcodeList"] # ürün barkodu
-            urun_adi = i["variant"]["name"] #ürün ismi
-            urun_bilgileri.append({"Ürün Barkodu": barcodeList,
-                                    "Ürün Adı": urun_adi})
-
+          # for i in content["orderLineItems"]:
+          #   barcodeList = i["variant"]["barcodeList"] # ürün barkodu
+          #   urun_adi = i["variant"]["name"] #ürün ismi
+          #   urun_bilgileri.append({"Ürün Barkodu": barcodeList,
+          #                           "Ürün Adı": urun_adi})
+            
           #st.session_state["urun_bilgileri"].extend(urun_bilgileri)
-          st.session_state["urun_bilgileri"].extend(urun_bilgileri)
+          
+          #st.session_state["urun_bilgileri"].extend(urun_bilgileri)
+          #st.write(st.session_state["urun_bilgileri"])
+          # urun_barkodlari = [i["Ürün Barkodu"] for i in st.session_state["urun_bilgileri"]]
+          # st.write(urun_barkodlari) 
 
-          urun_barkodlari = [i["Ürün Barkodu"] for i in st.session_state["urun_bilgileri"]]
-           
-    
-       
+
           siparis_durumu = content["orderLineItems"][0]["status"]
    
           imalat_bitis_suresi = self.resmi_tatil.is_gunu_ekle(tarih_str=siparis_tarihi, is_gunu=12)
@@ -166,7 +167,7 @@ class IKAS_SIPARIS_ENTEGRASYON():
                 "siparis_tarihi":siparis_tarihi,
                 "siparis_numarasi": siparis_numarasi,
                 "musteri_adi_soyadi":musteri_adi_soyadi,
-                "urun_barkodu":urun_barkodlari,
+                "urun_barkodu":barcode_list,
                 "toplam_urun_sayisi":itemCount,
                 "notlar":notlar,
                 "imalat_bitis_suresi":imalat_bitis_suresi,
@@ -178,7 +179,7 @@ class IKAS_SIPARIS_ENTEGRASYON():
                   "siparis_tarihi":siparis_tarihi,
                   "siparis_numarasi": siparis_numarasi,
                   "musteri_adi_soyadi":musteri_adi_soyadi,
-                  "urun_barkodu":urun_barkodlari,
+                  "urun_barkodu":barcode_list,
                   "toplam_urun_sayisi":itemCount,
                   "notlar":notlar,
                   "imalat_bitis_suresi":imalat_bitis_suresi,
