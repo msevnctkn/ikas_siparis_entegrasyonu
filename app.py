@@ -1,7 +1,7 @@
 from streamlit_init import *
-#st.beta_set_page_config(page_title='your_title', page_icon = st.image(), layout = 'wide', initial_sidebar_state = 'auto')
+
 init_states()
-st.set_page_config(layout="wide")
+st.set_page_config(page_title='ÖMAS KONSEPT', layout = 'wide', initial_sidebar_state = 'auto')
 import time
 import os
 import pandas as pd
@@ -17,13 +17,17 @@ CLIENT_ID = st.secrets["CLIENT_ID"]
 CLIENT_SECRET = st.secrets["CLIENT_SECRET"]
 
 st.header("ÖMAS KONSEPT SİPARİŞ TAKİP SİSTEMİ", divider=True, anchor="www.omaskonsept.com", )
+
 sidebarButton = st.sidebar.selectbox("Menü", ["ikas Bekleyen Siparişler",
                                               "Teslim Edilen Siparişler (ikas)",
+                                              "Müşteriler",
                                               "Stok Yönetimi",
                                               "Tamamlanan Siparişler",
                                               "Veritabanı",
                                               "Dosya Gönder"])
 
+if st.sidebar.button("Session state temizle"):
+    st.session_state.clear()
 
 entegrasyon = IKAS_SIPARIS_ENTEGRASYON(client_id=CLIENT_ID, client_secret=CLIENT_SECRET)
 access_token = entegrasyon.get_access_token()
