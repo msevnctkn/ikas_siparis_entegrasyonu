@@ -47,10 +47,6 @@ def init_states():
         st.session_state.setdefault(key, [])
     
 
-    if "urun_bilgileri" not in st.session_state:
-        st.session_state["urun_bilgileri"] = []
-    
-
 
 
     # Oluşturuldu statüsünde bekleyen cam sayısı
