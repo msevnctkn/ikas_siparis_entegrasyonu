@@ -136,7 +136,7 @@ class IKAS_SIPARIS_ENTEGRASYON():
 
           siparis_durumu = content["orderLineItems"][0]["status"]
    
-          imalat_bitis_suresi = pd.to_datetime(self.resmi_tatil.is_gunu_ekle(tarih_str=siparis_tarihi, is_gunu=12), dayfirst=True, errors="coerce").strftime("%d.%m.%y")
+          imalat_bitis_suresi = pd.to_datetime(self.resmi_tatil.is_gunu_ekle(tarih_str=siparis_tarihi, is_gunu=12), dayfirst=True, errors="coerce")
           siparis_durumu = self.siparis_durumu_tr()[siparis_durumu]
           
           #st.write(st.session_state["urun_adi"])
@@ -264,3 +264,4 @@ class IKAS_SIPARIS_ENTEGRASYON():
         #image_urls.append(url)
 
       return data
+
