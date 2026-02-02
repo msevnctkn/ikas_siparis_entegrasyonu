@@ -59,11 +59,16 @@ class IKAS_SIPARIS_ENTEGRASYON():
 
 
     def post_request(self, access_token):
+      tum_siparisler = []
+      page = 13
+      limit = 200
+
       VARIABLES = {
                   "pagination": {
-                      "page": 13,
-                      "limit": 200
+                      "page": page,
+                      "limit": limit
                   }
+    
                 }
 
       self.respond = requests.post(
@@ -84,10 +89,14 @@ class IKAS_SIPARIS_ENTEGRASYON():
         st.write("---")
 
       self.data = self.respond.json()
+
       has_next = self.data["data"]["listOrder"]["hasNext"] 
       page = self.data["data"]["listOrder"]["page"]
       count = self.data["data"]["listOrder"]["count"] #bugüne kadar alınan toplam sipariş sayısını temsil eder.
       orders = self.data.get("data", {}).get("listOrder", {}).get("data", [])
+      
+  
+        
       return self.data
     
     def siparis_dataframe_hazirla(self, data):
@@ -127,8 +136,9 @@ class IKAS_SIPARIS_ENTEGRASYON():
 
           siparis_durumu = content["orderLineItems"][0]["status"]
    
-          imalat_bitis_suresi = self.resmi_tatil.is_gunu_ekle(tarih_str=siparis_tarihi, is_gunu=12)
+          imalat_bitis_suresi = pd.to_datetime(self.resmi_tatil.is_gunu_ekle(tarih_str=siparis_tarihi, is_gunu=12), dayfirst=True, errors="coerce").strftime("%d.%m.%y")
           siparis_durumu = self.siparis_durumu_tr()[siparis_durumu]
+          
           #st.write(st.session_state["urun_adi"])
           if siparis_numarasi not in st.session_state.get("eklenen_siparisler", 0):
             st.session_state["eklenen_siparisler"].add(siparis_numarasi)
@@ -254,4 +264,3 @@ class IKAS_SIPARIS_ENTEGRASYON():
         #image_urls.append(url)
 
       return data
-
