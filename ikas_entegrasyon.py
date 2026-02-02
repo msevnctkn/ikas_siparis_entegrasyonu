@@ -61,7 +61,7 @@ class IKAS_SIPARIS_ENTEGRASYON():
     def post_request(self, access_token):
       VARIABLES = {
                   "pagination": {
-                      "page": 14,
+                      "page": 13,
                       "limit": 200
                   }
                 }
@@ -254,3 +254,4 @@ class IKAS_SIPARIS_ENTEGRASYON():
         #image_urls.append(url)
 
       return data
+
