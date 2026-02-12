@@ -10,6 +10,14 @@ def HAM_MADDE_STOKLARI():
     olusturuldu_ham_cerceve_sayisi_60 = st.session_state["olusturuldu_ham_cerceve_sayisi_60"]
     olusturuldu_ham_cerceve_sayisi_40 = st.session_state["olusturuldu_ham_cerceve_sayisi_40"]
     
+    @st.dialog("Yeni Sipariş Talebi")
+    def siparis_popup():
+        adet = st.number_input("Kaç adet istiyorsun?", min_value=1)
+
+        if st.button("Onayla"):
+            st.success(f"{adet} adet sipariş talebi gönderildi 🚀")
+            st.session_state["siparis_adet"] = adet
+            st.rerun()
 
     with st.expander("CAM STOKLARI", False):
         col1, col2, col3, col4 = st.columns(4)
@@ -20,6 +28,9 @@ def HAM_MADDE_STOKLARI():
             with st.container(border=True):
 
                 stok_cam_kare_100 = st.number_input("100 CM KARE CAM SAYISI", value=0, step=1)
+                if st.button("Sipariş isteğinde bulun", key=stok_cam_kare_100):
+                    siparis_popup()
+
                 stok_cam_kare_80 = st.number_input("80 CM KARE STOK CAM SAYISI", value=0, step=1) 
                 stok_cam_kare_70 = st.number_input("70 CM KARE STOK CAM SAYISI", value=0, step=1)
                 stok_cam_kare_60 = st.number_input("60 CM KARE STOK CAM SAYISI", value=0, step=1)

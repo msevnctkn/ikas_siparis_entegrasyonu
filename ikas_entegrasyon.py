@@ -6,7 +6,7 @@ from sorgular import *
 import time
 from streamlit_init import *
 from turkiye_tatiller import RESMI_TATILLER
-
+from datetime import datetime
 
 class IKAS_SIPARIS_ENTEGRASYON():
     def __init__(self, client_id : str, client_secret : str, ):
@@ -53,15 +53,16 @@ class IKAS_SIPARIS_ENTEGRASYON():
                                   "FULFILLED":"Kısmi Teslim Edildi",
                                   "CANCELLED":"İptal Edildi",
                                   "UNFULFILLED":"Oluşturuldu",
-                                  "REFUNDED":"İade Edildi"}
+                                  "REFUNDED":"İade Edildi",
+                                  "REFUND_REJECTED":"İade Reddedildi"}
       return self.siparis_durumu_dict
 
 
 
     def post_request(self, access_token):
       tum_siparisler = []
-      page = 13
-      limit = 200
+      page = 14
+      limit = 195
 
       VARIABLES = {
                   "pagination": {
@@ -95,7 +96,7 @@ class IKAS_SIPARIS_ENTEGRASYON():
       count = self.data["data"]["listOrder"]["count"] #bugüne kadar alınan toplam sipariş sayısını temsil eder.
       orders = self.data.get("data", {}).get("listOrder", {}).get("data", [])
       
-  
+      
         
       return self.data
     
@@ -135,8 +136,9 @@ class IKAS_SIPARIS_ENTEGRASYON():
           
 
           siparis_durumu = content["orderLineItems"][0]["status"]
+       
    
-          imalat_bitis_suresi = pd.to_datetime(self.resmi_tatil.is_gunu_ekle(tarih_str=siparis_tarihi, is_gunu=12), dayfirst=True, errors="coerce").date().strftime("%d.%m.%y")
+          imalat_bitis_suresi = pd.to_datetime(self.resmi_tatil.is_gunu_ekle(tarih_str=siparis_tarihi, is_gunu=12), dayfirst=True, errors="ignore").date().strftime("%d.%m.%y")
           siparis_durumu = self.siparis_durumu_tr()[siparis_durumu]
           
           #st.write(st.session_state["urun_adi"])
@@ -167,7 +169,7 @@ class IKAS_SIPARIS_ENTEGRASYON():
 
 
 
-            if siparis_durumu == "Oluşturuldu":
+            if siparis_durumu == "Oluşturuldu" or siparis_durumu == "İade Reddedildi":
         
               st.session_state["rows"].append({
                 "siparis_tarihi":siparis_tarihi,
@@ -264,7 +266,3 @@ class IKAS_SIPARIS_ENTEGRASYON():
         #image_urls.append(url)
 
       return data
-
-
-
-

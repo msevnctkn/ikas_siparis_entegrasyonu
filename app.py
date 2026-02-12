@@ -11,6 +11,7 @@ from tikli_dataframe import SIPARIS_DATAFRAME_DUZENLE
 from veritabani import *
 from veritabani import databaseden_butun_verileri_cek
 from malzeme_istekleri import *
+from turkiye_tatiller import RESMI_TATILLER
 
 
 CLIENT_ID = st.secrets["CLIENT_ID"]
@@ -44,9 +45,46 @@ if sidebarButton == "ikas Bekleyen Siparişler":
 
 
     siparis_listesi_copy = pd.DataFrame(siparis_listesi).copy()
+    editable_siparis_listesi = st.data_editor(siparis_listesi_copy, num_rows="dynamic", disabled=["siparis_numarasi", "musteri_adi_soyadi","urun_barkodu", "toplam_urun_sayisi", "siparis_durumu" ])
+    
+    #SİLİNEN SATIRLAR
+    silinenler = siparis_listesi_copy[~siparis_listesi_copy["siparis_numarasi"].isin(editable_siparis_listesi["siparis_numarasi"])]
+    st.write(silinenler)
+    
+    
+    #siparişleri 'siparisler' isimli veritabanına kaydeder.
+    # for _, row in siparis_listesi_copy.iterrows():
+    #     supabase_nesnesi.table("siparisler").upsert({
+    #     "siparis_numarasi": row["siparis_numarasi"],
+    #     "siparis_tarihi": row["siparis_tarihi"],
+    #     "musteri_adi_soyadi": row["musteri_adi_soyadi"],
+    #     "urun_barkodu": row["urun_barkodu"],
+    #     "toplam_urun_sayisi": row["toplam_urun_sayisi"],
+    #     "notlar": row.get("notlar"),
+    #     "siparis_durumu": row.get("siparis_durumu", "Yeni"),
+    #     }).execute()
 
-    st.write("Sipariş Listesi Kopyası")
-    st.write(siparis_listesi_copy)
+
+    
+    for _, row in silinenler.iterrows():
+        supabase_nesnesi.table("siparisler") \
+        .delete() \
+        .eq("siparis_numarasi", row["siparis_numarasi"]) \
+        .execute()
+
+
+
+    # for i in zip(siparis_listesi, editable_siparis_listesi):
+
+    #     st.write(i)
+    #     st.write(i["siparis_tarihi"], j["siparis_tarihi"])
+    #     if i["siparis_tarihi"] != j["siparis_tarihi"]:
+    #         resmi_tatiller = RESMI_TATILLER()
+    #         imalat_bitis_suresi_yeni = resmi_tatiller.is_gunu_ekle(j["siparis_tarihi"], is_gunu=12)
+    #         st.write(imalat_bitis_suresi_yeni)
+
+
+        
 
     checkbox_bilgiler = SIPARIS_DATAFRAME_DUZENLE.uretim_asamalari_tablosu(df=pd.DataFrame(siparis_listesi), supabase=supabase_nesnesi)
 
