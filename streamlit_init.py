@@ -11,7 +11,6 @@ def init_states():
                       "urun_adi",
                       "siparis_durumu",
                       "imalat_bitis_suresi",
-                      "",
                       "imageId",
                       "isMain",
                       "order",
@@ -144,4 +143,5 @@ def anlik_stoklar_init():
     for key in stoklar_session_state_list:
         st.session_state.setdefault(key, 0)
         
+
     return stoklar_session_state_list
