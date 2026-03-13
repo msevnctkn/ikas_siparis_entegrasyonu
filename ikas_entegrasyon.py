@@ -60,7 +60,7 @@ class IKAS_SIPARIS_ENTEGRASYON():
 
 
     def post_request(self, access_token):
-      tum_siparisler = []
+     
       page = 14
       limit = 193
 
@@ -266,5 +266,6 @@ class IKAS_SIPARIS_ENTEGRASYON():
         #image_urls.append(url)
 
       return data
+
 
 
