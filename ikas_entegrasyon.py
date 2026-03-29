@@ -133,8 +133,8 @@ class IKAS_SIPARIS_ENTEGRASYON():
             if i["options"] != None:
                 if len(i["options"]) > 0:
 
-                ozel_logo = [j["name"] for j in i["options"]]
-                logo_var_mi = ozel_logo
+                    ozel_logo = [j["name"] for j in i["options"]]
+                    logo_var_mi = ozel_logo
 
 
               
