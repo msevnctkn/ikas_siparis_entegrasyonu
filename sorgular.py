@@ -1,4 +1,4 @@
-ORDER_QUERY = """query ListOrder($pagination: PaginationInput) {
+ORDER_QUERY = """query ListOrder($pagination: PaginationInput!) {
   listOrder(pagination: $pagination) {
     limit
     hasNext
@@ -6,6 +6,7 @@ ORDER_QUERY = """query ListOrder($pagination: PaginationInput) {
     count
     data {
       createdAt
+      orderedAt
       customer {
         fullName
       }
@@ -18,15 +19,50 @@ ORDER_QUERY = """query ListOrder($pagination: PaginationInput) {
           name
           variantValues {
             order
+        }
+ 
+        }
+        finalPrice
+        price
+        status
+        options {
+          name
+          productOptionId
+          productOptionsSetId
+          type
+          values {
+            applyAfterCampaign
+            name
+            price
+            priceType
+            value
           }
         }
-        status
+    
       }
+        attributes {
+          orderAttributeId
+          orderAttributeOptionId
+          value
+        
+      }
+      shippingAddress {
+        addressLine1
+        addressLine2
+         city {
+          name
+        }
+      }
+      cancelReason
+    
       salesChannel {
         name
       }
     }
   }
+
+
+   
   listProduct {
     data {
       variants {
