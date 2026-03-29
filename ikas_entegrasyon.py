@@ -128,11 +128,23 @@ class IKAS_SIPARIS_ENTEGRASYON():
           for i in content["orderLineItems"]:
             barcodeList = i["variant"]["barcodeList"] # ürün barkodu
             urun_adi = i["variant"]["name"] #ürün ismi
+            logo_var_mi = []
+
+            if i["options"] != None:
+                if len(i["options"]) > 0:
+
+                ozel_logo = [j["name"] for j in i["options"]]
+                logo_var_mi = ozel_logo
+
+
+              
             urun_bilgileri.append({"Ürün Barkodu": barcodeList,
-                                    "Ürün Adı": urun_adi})
+                                    "Ürün Adı": urun_adi,
+                                    "Özel Logo": logo_var_mi})
         
           urun_barkodu = [i["Ürün Barkodu"] for i in urun_bilgileri]
           urun_adi = [i["Ürün Adı"] for i in urun_bilgileri]
+          logo = [i["Özel Logo"] for i in urun_bilgileri]
           
 
           siparis_durumu = content["orderLineItems"][0]["status"]
@@ -177,6 +189,7 @@ class IKAS_SIPARIS_ENTEGRASYON():
                 "musteri_adi_soyadi":musteri_adi_soyadi,
                 "urun_barkodu":urun_barkodu,
                 "toplam_urun_sayisi":itemCount,
+                "ozel_logo": logo, 
                 "notlar":notlar,
                 "imalat_bitis_suresi":imalat_bitis_suresi,
                 "siparis_durumu":siparis_durumu,     
@@ -189,6 +202,7 @@ class IKAS_SIPARIS_ENTEGRASYON():
                   "musteri_adi_soyadi":musteri_adi_soyadi,
                   "urun_barkodu":urun_barkodu,
                   "toplam_urun_sayisi":itemCount,
+                  "ozel_logo": logo,
                   "notlar":notlar,
                   "imalat_bitis_suresi":imalat_bitis_suresi,
                   "siparis_durumu":siparis_durumu,
