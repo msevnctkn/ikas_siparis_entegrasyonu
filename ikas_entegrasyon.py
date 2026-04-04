@@ -153,8 +153,8 @@ class IKAS_SIPARIS_ENTEGRASYON():
           st.write("tarih:", siparis_tarihi, type(siparis_tarihi))
           st.write("is_gunu_ekle sonucu:", sonuc, type(sonuc))
 
-          imalat_bitis_suresi2 = pd.to_datetime(sonuc, errors="coerce")
-          st.write("datetime sonucu:", imalat_bitis_suresi2, type(imalat_bitis_suresi2))
+          #imalat_bitis_suresi2 = pd.to_datetime(sonuc, errors="coerce")
+          #st.write("datetime sonucu:", imalat_bitis_suresi2, type(imalat_bitis_suresi2))
     
     
     
