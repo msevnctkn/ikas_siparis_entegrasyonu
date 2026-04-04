@@ -149,9 +149,9 @@ class IKAS_SIPARIS_ENTEGRASYON():
 
           siparis_durumu = content["orderLineItems"][0]["status"]
        
-          sonuc = self.resmi_tatil.is_gunu_ekle(siparis_tarihi,12)
-          st.write("tarih:", siparis_tarihi,)
-          st.write("is_gunu_ekle sonucu:", sonuc)
+          #sonuc = self.resmi_tatil.is_gunu_ekle(siparis_tarihi,12)
+          #st.write("tarih:", siparis_tarihi,)
+          #st.write("is_gunu_ekle sonucu:", sonuc)
 
           #imalat_bitis_suresi2 = pd.to_datetime(sonuc, errors="coerce")
           #st.write("datetime sonucu:", imalat_bitis_suresi2, type(imalat_bitis_suresi2))
@@ -164,7 +164,7 @@ class IKAS_SIPARIS_ENTEGRASYON():
     
     
    
-          imalat_bitis_suresi = pd.to_datetime(self.resmi_tatil.is_gunu_ekle(tarih_str=siparis_tarihi, is_gunu=12), dayfirst=True, errors="ignore").date().strftime("%d.%m.%y")
+          #imalat_bitis_suresi = pd.to_datetime(self.resmi_tatil.is_gunu_ekle(tarih_str=siparis_tarihi, is_gunu=12), dayfirst=True, errors="ignore").date().strftime("%d.%m.%y")
           siparis_durumu = self.siparis_durumu_tr()[siparis_durumu]
           
           #st.write(st.session_state["urun_adi"])
@@ -205,7 +205,7 @@ class IKAS_SIPARIS_ENTEGRASYON():
                 "toplam_urun_sayisi":itemCount,
                 "ozel_logo": logo, 
                 "notlar":notlar,
-                "imalat_bitis_suresi":imalat_bitis_suresi,
+                #"imalat_bitis_suresi":imalat_bitis_suresi,
                 "siparis_durumu":siparis_durumu,     
                 })
 
@@ -218,7 +218,7 @@ class IKAS_SIPARIS_ENTEGRASYON():
                   "toplam_urun_sayisi":itemCount,
                   "ozel_logo": logo,
                   "notlar":notlar,
-                  "imalat_bitis_suresi":imalat_bitis_suresi,
+                  #"imalat_bitis_suresi":imalat_bitis_suresi,
                   "siparis_durumu":siparis_durumu,
               })
           
