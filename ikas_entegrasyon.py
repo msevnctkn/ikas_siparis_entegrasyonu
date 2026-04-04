@@ -149,6 +149,20 @@ class IKAS_SIPARIS_ENTEGRASYON():
 
           siparis_durumu = content["orderLineItems"][0]["status"]
        
+          sonuc = self.resmi_tatil.is_gunu_ekle(tarih)
+           st.write("tarih:", tarih, type(tarih))
+           st.write("is_gunu_ekle sonucu:", sonuc, type(sonuc))
+
+           imalat_bitis_suresi2 = pd.to_datetime(sonuc, errors="coerce")
+           st.write("datetime sonucu:", imalat_bitis_suresi2, type(imalat_bitis_suresi))
+    
+    
+    
+    
+    
+    
+    
+    
    
           imalat_bitis_suresi = pd.to_datetime(self.resmi_tatil.is_gunu_ekle(tarih_str=siparis_tarihi, is_gunu=12), dayfirst=True, errors="ignore").date().strftime("%d.%m.%y")
           siparis_durumu = self.siparis_durumu_tr()[siparis_durumu]
