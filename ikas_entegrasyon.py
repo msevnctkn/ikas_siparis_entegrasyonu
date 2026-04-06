@@ -205,7 +205,7 @@ class IKAS_SIPARIS_ENTEGRASYON():
                 "toplam_urun_sayisi":itemCount,
                 "ozel_logo": logo, 
                 "notlar":notlar,
-                #"imalat_bitis_suresi":imalat_bitis_suresi,
+                "imalat_bitis_suresi":imalat_bitis_suresi,
                 "siparis_durumu":siparis_durumu,     
                 })
 
@@ -218,7 +218,7 @@ class IKAS_SIPARIS_ENTEGRASYON():
                   "toplam_urun_sayisi":itemCount,
                   "ozel_logo": logo,
                   "notlar":notlar,
-                  #"imalat_bitis_suresi":imalat_bitis_suresi,
+                  "imalat_bitis_suresi":imalat_bitis_suresi,
                   "siparis_durumu":siparis_durumu,
               })
           
