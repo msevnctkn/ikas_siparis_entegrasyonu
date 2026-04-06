@@ -154,7 +154,7 @@ class IKAS_SIPARIS_ENTEGRASYON():
           st.write("is_gunu_ekle sonucu:", sonuc)
 
           imalat_bitis_suresi2 = pd.to_datetime(sonuc, errors="coerce")
-          st.write("datetime sonucu:", imalat_bitis_suresi2, type(imalat_bitis_suresi2))
+          st.write("datetime sonucu:", imalat_bitis_suresi2, )
     
     
     
