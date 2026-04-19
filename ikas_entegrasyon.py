@@ -62,7 +62,7 @@ class IKAS_SIPARIS_ENTEGRASYON():
     def post_request(self, access_token):
      
       page = 14
-      limit = 193
+      limit = 200
 
       VARIABLES = {
                   "pagination": {
